@@ -16,7 +16,6 @@ export default class HelloWorld extends Vue {
   }
   async greet(){
     const res: any = await this.$https.get(this.$urls.bar,{})
-    console.log(res)
   }
 }
 </script>

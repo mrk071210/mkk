@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import {
+  Container,
+  Header,
+  Aside,
+  Main,
+  Footer,
   Dialog,
   Form,
   FormItem,
@@ -26,6 +31,11 @@ import service from "./utils/https";
 import urls from "./utils/urls"
 Vue.config.productionTip = false
 Vue.component(Dialog.name, Dialog);
+Vue.component(Container.name, Container);
+Vue.component(Header.name, Header);
+Vue.component(Aside.name, Aside);
+Vue.component(Main.name, Main);
+Vue.component(Footer.name, Footer);
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
 Vue.component(Input.name, Input);
