@@ -10,7 +10,7 @@ module.exports = {
   lintOnSave: false,
   // webpack配置
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
-  chainWebpack: () => {},
+  chainWebpack: () => { },
   configureWebpack: config => {
     if (process.env.NODE_ENV === "production") {
       // 为生产环境修改配置...
@@ -48,7 +48,9 @@ module.exports = {
     // 开启 CSS source maps?
     sourceMap: false,
     // css预设器配置项
-    loaderOptions: {},
+    loaderOptions: {
+    
+    },
     // 启用 CSS modules for all css / pre-processor files.
     modules: false
   },
@@ -79,7 +81,7 @@ module.exports = {
         }
       }
     },
-    before: app => {}
+    before: app => { }
   },
   // 第三方插件配置
   pluginOptions: {

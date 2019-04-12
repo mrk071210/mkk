@@ -2,7 +2,6 @@
   <div class="home">
 <div ref="container" class="container">
         <div ref="inner" class="inner">
-          <img ref="innerImg" src="https://isujin.com/wp-content/uploads/2018/11/wallhaven-672007-1.png" alt>
         </div>
       </div>
   </div>
@@ -40,12 +39,14 @@ export default class Home extends Vue {
   inner:any
   counter:number = 0
   updateRate :number = 2
+  content:String = ''
+  
   mounted () {
     this.container = this.$refs.container
     this.inner = this.$refs.inner
     this.container.onmousemove = this.onMouseMoveHandler
     this.mouse.setOrigin(this.container)
-    this.setImgPosition()
+    // this.setImgPosition()
   }
   onMouseMoveHandler(event:any){
     if (this.isTimeToUpdate()) {
@@ -80,9 +81,7 @@ export default class Home extends Vue {
     let imgHeight = innerImg.offsetHeight
     let marginLeft = -width/55 + 'px'
     let marginTop = -(imgHeight-height)/2/55 + 'px'
-    innerImg.style.margin = marginTop+" 0 0 "+marginLeft
-        console.log(innerImg.style.margin)
-
+    this.inner.style.margin = marginTop+" 0 0 "+marginLeft
   }
 }
 </script>
@@ -93,9 +92,16 @@ export default class Home extends Vue {
         overflow: hidden;
   }
   .inner {
-    width: 100%;
-    height: 100%;
+    width: 110%;
+    margin-left: -5%;
+    height: 110%;
+    margin-top: -2%;
     overflow: hidden;
+    background: url("https://isujin.com/wp-content/uploads/2018/11/wallhaven-672007-1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.01;
   }
   .inner img{
     width: 100%;
