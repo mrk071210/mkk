@@ -9,6 +9,8 @@ import 'simplemde/dist/simplemde.min.css'
 import ElementUI from "element-ui";
 import service from "./utils/https";
 import urls from "./utils/urls"
+
+
 Vue.config.productionTip = false
 
 Vue.prototype.$https = service

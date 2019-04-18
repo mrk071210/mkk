@@ -3,16 +3,21 @@
     <div ref="container" class="container">
       <div ref="inner" class="inner"></div>
     </div>
-    <el-row v-loading="loading">
+    <el-row class="main" v-loading="loading">
       <el-col
         v-for="(item,index) in articleList"
         :key="index"
         class="articleItem"
       >
-        <div :style="{background:'urls('+item.image+')'}"></div>
-        <p @click="articleDetail(item.id)">{{item.title}}</p>
-        <div>
-          {{item.author}}{{item.createdAt}}
+      <div class="articleDesc">
+        <div class="articleImg" :style="{backgroundImage:'url('+item.image+')'}"></div>
+        <div class="textArea">
+          <p class="articleTitle" @click="articleDetail(item.id)">{{item.title}}</p>
+          <p class="articleBrief" v-if="item.description">{{item.description}}</p>
+        </div>
+        </div>
+        <div class="articleAuthor">
+          <span class="editBtn" @click="edit(item)">编辑</span><span>{{item.author}}</span><span>{{formatDate(item.createdAt)}}</span>
         </div>
       </el-col>
     </el-row>
@@ -22,7 +27,7 @@
 <script lang="ts">
 declare var window: any;
 import { Component, Vue } from "vue-property-decorator";
-
+import moment from 'moment'
 @Component({
   components: {}
 })
@@ -103,12 +108,23 @@ export default class Home extends Vue {
     this.loading = false
   }
   articleDetail(id:String){
-    let url = "http://0.0.0.0:3001/article?"
+    let url = "http://www.qq.com/article?"
+    // let url = "article"
     window.open(url+`articleId=${id}`)
+    // this.$router.push(url+`articleId=${id}`)
+  }
+  formatDate(date:string){
+    return moment(date).format('YYYY-MM-DD')
+  }
+  edit(data:object){
+    if(data.id){
+      let url = "http://www.qq.com/edit?"
+      window.open(url+`id=${data.id}`)
+    }
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .container {
   width: calc(100vw - 17px);
   height: 100vh;
@@ -128,6 +144,60 @@ export default class Home extends Vue {
 }
 .inner img {
   width: 100%;
+}
+.articleItem{
+  display: flex;
+  flex-direction: column;
+  .articleDesc{
+    display: flex;
+    flex-direction: row;
+  }
+  .articleImg{
+    width: 80px;
+    height: 80px;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .textArea{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    p{
+      margin: 0;
+    }
+  }
+  .articleTitle{
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .articleBrief{
+    color:#909399;
+  }
+  .articleTitle:hover{
+      text-decoration: underline;
+    }
+  .articleAuthor{
+    height: 20px;
+    line-height: 20px;
+    text-align: right;
+    color:#909399;
+    :nth-child(2){
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .editBtn{
+      display: none;
+      cursor: pointer;
+    }
+  }
+   &:hover{
+      .editBtn{
+        display: inline-block
+      }
+    }
 }
 </style>
 

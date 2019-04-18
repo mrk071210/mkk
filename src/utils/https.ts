@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { Message, MessageBox } from 'element-ui'
 // 创建axios实例
 let service: any = {};
 if (process.env.NODE_ENV === "development") {
@@ -39,4 +39,41 @@ service.interceptors.response.use(
   }
 );
 
-export default service;
+function checkResponseStatus (response:any) {
+  if (response.status === 200 || response.status === 304) {
+    return response.data
+  }
+  return {error:true,response:response}
+}
+function cactchError (error:any) {
+  if (error.status === 400 || error.status === 404 || error.status === 500) {
+     Message({
+      message: `服务器访问出错. Error:${error.error},Message:${error.message}`,
+      type: 'error',
+      duration: 5000
+    })
+    return {error:true}
+  }
+}
+
+// check server response
+function checkResponseCode (response:any) {
+  const header = response.head
+  if (header && header.success) {
+    return response.data
+  } else {
+    if (header.code === '401') {
+    } else {
+      return { error: true }
+    }
+  }
+}
+export default {
+  get (url:string,params:any){
+    if(!url) return
+    return service.get(url,{params:params})
+    .then(checkResponseStatus)
+    .then(checkResponseCode)
+    .catch(cactchError)
+  }
+}

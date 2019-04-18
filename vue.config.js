@@ -64,7 +64,7 @@ module.exports = {
   devServer: {
     open: process.platform === "darwin",
     host: "0.0.0.0",
-    port: 3001, //8080,
+    port: 80, //8080,
     https: false,
     hotOnly: false,
     proxy: {
@@ -81,7 +81,11 @@ module.exports = {
         }
       }
     },
-    before: app => { }
+    historyApiFallback:{
+      index:"./index.html"
+    },
+    before: app => { },
+    disableHostCheck: true
   },
   // 第三方插件配置
   pluginOptions: {
