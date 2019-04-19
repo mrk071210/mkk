@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <product-list></product-list>
     <div ref="container" class="container">
       <div ref="inner" class="inner"></div>
     </div>
@@ -27,6 +28,7 @@
 <script lang="ts">
 declare var window: any;
 import { Component, Vue } from "vue-property-decorator";
+import service from "@/utils/https"
 import moment from 'moment'
 @Component({
   components: {}
@@ -101,11 +103,10 @@ export default class Home extends Vue {
    */
   getArticle(){
     this.loading = true
-    const res:any = this.$https.get(this.$urls.getArticleList)
-    res.then((data:any) => {
-      this.articleList = data.data.data
+    service.get(this.$urls.getArticleList,{}).then((res:any) => {
+      this.articleList = res.data
+      this.loading = false
     })
-    this.loading = false
   }
   articleDetail(id:String){
     let url = "http://www.qq.com/article?"

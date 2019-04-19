@@ -60,10 +60,15 @@ function cactchError (error:any) {
 function checkResponseCode (response:any) {
   const header = response.head
   if (header && header.success) {
-    return response.data
+    return response
   } else {
     if (header.code === '401') {
     } else {
+      Message({
+        message: header.msg,
+        type: 'error',
+        duration: 4000
+      })
       return { error: true }
     }
   }
@@ -75,5 +80,12 @@ export default {
     .then(checkResponseStatus)
     .then(checkResponseCode)
     .catch(cactchError)
+  },
+  post (url:string, data:any) {
+    if (!url) return
+      return service.post(url, data)
+        .then(checkResponseStatus)
+        .then(checkResponseCode)
+        .catch(cactchError)
   }
 }

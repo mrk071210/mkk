@@ -39,25 +39,34 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator';
+import { Getter, Action } from 'vuex-class'
 import config from "@/utils/config"
+import service from "@/utils/https"
+import { User } from '../../store/types';
+
 @Component({
   components: {}
 })
 export default class Layout extends Vue {
+   @Getter('user') user!: User
+   @Action('setUser') setUser!: any
   loginFlag:boolean = false
   userInfo:object = {}
+  computed() {
+      user:()=>{this.user}
+  }
   mounted() {
+    console.log(this.user)
     const code = this.$route.query.code
     if(code){
       this.getUser(code)
     }
-    if(window.sessionStorage.userInfo){
-        this.userInfo = JSON.parse(window.sessionStorage.userInfo)
-        if(this.userInfo.id){
+    else if(this.user){
+        if(this.user.id){
           this.loginFlag = true
+          this.userInfo = this.user
         }
-        console.log(this.userInfo.avatar_url)
     }else{
         this.loginFlag = false
     }
@@ -68,16 +77,15 @@ export default class Layout extends Vue {
     window.location.href = `${config.oauth_uri}?client_id=${config.client_id}&scope=user:email`
   }
   logOut(){
-    window.sessionStorage.userInfo = undefined
+    this.setUser({})
     this.loginFlag = false
   }
   async getUser(code:any){
-    const res = await this.$https.post(this.$urls.getUser,{code:code}).then(
-      (data: any) => data.data
-    );
-    if(res.head.code == 200){
+    let res = await service.post(this.$urls.getUser,{code:code})
+    if(!res.error){
       let userInfo = res.data
-       window.sessionStorage.userInfo = JSON.stringify(userInfo);
+      this.setUser(userInfo)
+    this.loginFlag = true
        this.$message({
          message:res.data.message,
          type:'success'
@@ -88,7 +96,7 @@ export default class Layout extends Vue {
         }
     }else{
       this.$message({
-         message:res.data.message,
+         message:res.header.msg,
          type:'error'
        })
     }
