@@ -90,7 +90,7 @@ export default class Edit extends Vue {
   cancel() {}
   save(formName: any) {
     let url = this.isCreate?this.$urls.createArticle:this.$urls.updatedArticle
-    this.$refs[formName].validate((valid: any) => {
+    (this.$refs[formName] as any).validate((valid: any) => {
           if (valid) {
             
             this.$https.post(url, this.articleData).then((res:any) => {

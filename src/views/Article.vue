@@ -79,7 +79,7 @@ export default class Article extends Vue {
       (data: any) => data.data.data
     );
     this.articleData = res;
-    this.article = marked(this.articleData.content,{
+    this.article = marked((this.articleData as any).content,{
           sanitize: true
         });
     this.loading = false;

@@ -93,7 +93,7 @@ export default class Home extends Vue {
     let innerImg = this.$refs.innerImg;
     let width = document.body.clientWidth;
     let height = document.body.clientHeight;
-    let imgHeight = innerImg.offsetHeight;
+    let imgHeight = (innerImg as any).offsetHeight;
     let marginLeft = -width / 55 + "px";
     let marginTop = -(imgHeight - height) / 2 / 55 + "px";
     this.inner.style.margin = marginTop + " 0 0 " + marginLeft;
@@ -118,9 +118,9 @@ export default class Home extends Vue {
     return moment(date).format('YYYY-MM-DD')
   }
   edit(data:object){
-    if(data.id){
+    if((data as any).id){
       let url = "http://www.qq.com/edit?"
-      window.open(url+`id=${data.id}`)
+      window.open(url+`id=${(data as any).id}`)
     }
   }
 }

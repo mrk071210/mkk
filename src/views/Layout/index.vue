@@ -63,7 +63,7 @@ export default class Layout extends Vue {
       this.getUser(code)
     }
     else if(this.user){
-        if(this.user.id){
+        if((this.user as any).id){
           this.loginFlag = true
           this.userInfo = this.user
         }
