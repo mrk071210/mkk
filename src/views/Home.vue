@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <product-list></product-list>
+    <!-- <product-list></product-list> -->
     <div ref="container" class="container">
       <div ref="inner" class="inner"></div>
     </div>
@@ -60,11 +60,11 @@ export default class Home extends Vue {
   articleList:Array<any> = []
   loading:Boolean = false;
   mounted() {
-    this.container = this.$refs.container;
-    this.inner = this.$refs.inner;
-    this.container.onmousemove = this.onMouseMoveHandler;
-    this.mouse.setOrigin(this.container);
-    this.getArticle()
+    // this.container = this.$refs.container;
+    // this.inner = this.$refs.inner;
+    // this.container.onmousemove = this.onMouseMoveHandler;
+    // this.mouse.setOrigin(this.container);
+    // this.getArticle()
   }
   onMouseMoveHandler(event: any) {
     if (this.isTimeToUpdate()) {

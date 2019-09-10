@@ -67,20 +67,20 @@ module.exports = {
     port: 80, //8080,
     https: false,
     hotOnly: false,
-    proxy: {
-      // 设置代理
-      // proxy all requests starting with /api to jsonplaceholder
-      "/api": {
-        // target: "https://emm.cmccbigdata.com:8443/",
-        target: "http://localhost:3000/",
-        // target: "http://47.106.136.114/",
-        changeOrigin: true,
-        ws: true,
-        pathRewrite: {
-          "^/api": ""
-        }
-      }
-    },
+    // proxy: {
+    //   // 设置代理
+    //   // proxy all requests starting with /api to jsonplaceholder
+    //   "/api": {
+    //     // target: "https://emm.cmccbigdata.com:8443/",
+    //     target: "http://localhost:3000/",
+    //     // target: "http://47.106.136.114/",
+    //     changeOrigin: true,
+    //     ws: true,
+    //     pathRewrite: {
+    //       "^/api": ""
+    //     }
+    //   }
+    // },
     historyApiFallback:{
       index:"./index.html"
     },

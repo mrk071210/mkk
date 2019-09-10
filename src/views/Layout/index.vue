@@ -44,6 +44,7 @@ import { Getter, Action } from 'vuex-class'
 import config from "@/utils/config"
 import service from "@/utils/https"
 import { User } from '../../store/types';
+import io from 'socket.io-client';
 
 @Component({
   components: {}
@@ -57,6 +58,22 @@ export default class Layout extends Vue {
       user:()=>{this.user}
   }
   mounted() {
+    const socket = io('http://192.168.1.68:7001/');
+    socket.on('connect', function(){
+      console.log('连接')
+      socket.on('res', function(data:any){console.log('数据：'+data)});
+      socket.on('disconnect', function(){console.log('断开')});
+      socket.emit('ping', {
+			target: 'Dkn3UXSu8_jHvKBmAAHW',
+			payload: {
+				msg : 'test',
+			},
+			});
+		socket.on('Dkn3UXSu8_jHvKBmAAHW', function(data:any){console.log(data)});
+      }
+    );
+    
+    
     console.log(this.user)
     const code = this.$route.query.code
     if(code){
